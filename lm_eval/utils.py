@@ -374,6 +374,10 @@ def load_yaml_config(yaml_path=None, yaml_config=None, yaml_dir=None, mode="full
     # Add the import_function constructor to the YAML loader
     yaml.add_constructor("!function", constructor_fn)
     if yaml_config is None:
+        if ".ipynb_checkpoints" in yaml_path:
+            yaml_path = yaml_path.replace('/.ipynb_checkpoints', '')
+        if "-checkpoint" in yaml_path:
+            yaml_path = yaml_path.replace('-checkpoint', '')
         with open(yaml_path, "rb") as file:
             yaml_config = yaml.full_load(file)
 
